@@ -1,5 +1,6 @@
 <template>
   <section>
+    <div v-if="errorMessage" class="alert alert-danger" style="text-align: center;" role="alert">{{ errorMessage }}</div>
     <div class="container">
       <form ref="form">
         <h2 class="mt-3 mt-lg-5">Edit a product</h2>
@@ -7,43 +8,35 @@
 
         <div class="input-group mb-3">
           <span class="input-group-text">Name</span>
-          <input type="text" class="form-control" v-model="product.name" />
+          <input type="text" class="form-control" v-model="bike.name" />
         </div>
 
         <div class="input-group mb-3">
           <span class="input-group-text">Price</span>
-          <input type="number" class="form-control" v-model="product.price" />
+          <input type="number" class="form-control" v-model="bike.price" />
         </div>
 
         <div class="input-group mb-3">
           <span class="input-group-text">Description</span>
           <textarea
             class="form-control"
-            v-model="product.description"
+            v-model="bike.description"
           ></textarea>
         </div>
 
         <div class="input-group mb-3">
           <span class="input-group-text">Image URL</span>
-          <input type="text" class="form-control" v-model="product.image" />
-        </div>
-
-        <div class="input-group mb-3">
-          <span class="input-group-text">Category</span>
-          <select class="form-select">
-            <option value="testoptionvalue">test option       
-            </option>
-          </select>
+          <input type="text" class="form-control" v-model="bike.image" />
         </div>
 
         <div class="input-group mt-4">
-          <button type="button" class="btn btn-primary">
+          <button type="button" class="btn btn-primary" @click="updateBike()">
             Save changes
           </button>
           <button
             type="button"
             class="btn btn-danger"
-            @click="this.$router.push('/products')"
+            @click="this.$router.push('/')"
           >
             Cancel
           </button>
@@ -54,23 +47,54 @@
 </template>
 
 <script>
+import { useLoginStore } from '@/stores/LoginStore'
+import axios from '../../axios-auth';
+
 export default {
   name: "EditBike",
   props: {
     id: Number,
   },
+  setup() {
+    const store = useLoginStore();
+    return { store };
+  },
   data() {
     return {
-      product: {
+      errorMessage: '',
+      bike: {
         id: 0,
         name: "",
         price: 0.0,
         description: "",
         image: "",
       },
-      categories: [],
     };
-  }  
+  },
+  mounted() {
+    if (!this.store.isAuthenticated) this.$router.push('/login');
+
+    axios
+      .get('/products/' + this.id)
+      .then((result) => {
+        this.bike = result.data;
+      })
+      .catch((error) => {
+          this.errorMessage = error;
+        });
+  },
+  methods: {
+    updateBike() {
+      axios
+        .put('/products/' + this.id, this.bike)
+        .then((results) => {
+          this.$router.push('/');
+        })
+        .catch((error) => {
+          this.errorMessage = error;
+        }) 
+    }
+  }
 };
 </script>
 

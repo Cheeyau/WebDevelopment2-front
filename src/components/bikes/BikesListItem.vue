@@ -7,7 +7,12 @@
         <h3>{{ bike.name }}</h3>
         <p>{{ bike.description }}</p>
         <span class="price float-end">€ {{ bike.price.toFixed(2) }}</span>
-        <button class="btn btn-success" @click="addToBasket(bike.id)">Add to basket</button>
+        
+        <div>
+          <input type="number" class="form-control" min="0" v-model="this.amount" />
+        
+          <button class="btn btn-success" @click="addToBasket(bike.id, this.amount)">Add to basket</button>
+        </div>
       </div>
       
       <div v-if="store.isAuthenticated" class="card-footer">
@@ -24,27 +29,44 @@
 
 <script>
 import { useLoginStore } from '@/stores/LoginStore'
+import { useBasketStore } from '@/stores/BasketStore'
+import axios from '../../axios-auth';
 
 export default {
   name: "BikeListItem",
+  data() {
+    return {
+      amount: 0,
+    }
+  },
   props: {
     bike: Object,
   },
   setup() {
     const store = useLoginStore();
-    return { store };
+    const basket = useBasketStore();
+    return { store, basket };
   },
   methods: {
-    addToBasket(id) {
-      // TODO
+    addToBasket(id, amount) {
+      this.basket.addProduct(id, amount);
     },
     deleteBike(id) {
-      alert("bike not deleted: " + id);
-      // TODO use axios to delete the bike
+      axios
+        if (confirm('Are you sure you want to delete this item?')) {
+          axios
+            .delete('/products/' + id) 
+            .then((results) => {
+              this.$emit('update');
+            })
+            .catch((error) => {
+              this.errorMessage = error;
+              this.$emit('clicked', { offset: this.offset, limit: this.limit });
+            });
+        }
     },
     editBike(id) {
-      alert("bike not edited: " + id);
-      // TODO use the router to navigate to the editbike route and pass the id
+      this.$router.push('/editbike/' + id);
     },
   },
 };
@@ -56,10 +78,18 @@ export default {
   padding-bottom: 70px;
 }
 
-.card-body-items button {
+.card-body-items div button  {
   position: absolute;
   left: 15px;
   bottom: 15px;
+}
+
+.card-body-items div input  {
+  position: absolute;
+  width: 70px;
+  bottom: 15px;
+  left: 50%;
+  right: 50%;
 }
 
 .card-body-items span {

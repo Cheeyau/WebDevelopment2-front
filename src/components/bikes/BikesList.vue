@@ -14,12 +14,14 @@
       </section>
       <paginator :showButton="this.showNextButton" @clicked="childPaginator"/>
     </div>
+
+    <div v-if="errorMessage" class="alert alert-danger" style="text-align: center;" role="alert">{{ errorMessage }}</div>
   </section>
 </template>
 
 <script>
 import { useLoginStore } from '@/stores/LoginStore'
-import  axios  from '../../axios-auth';
+import  axios from '../../axios-auth';
 import  bikeListItem  from './BikesListItem.vue';
 import  paginator  from '../Paginator.vue';
 
@@ -39,6 +41,7 @@ export default {
       offset: 0,
       limit: 3,
       showNextButton: true,
+      errorMessage: ''
     };
   },
   mounted() {

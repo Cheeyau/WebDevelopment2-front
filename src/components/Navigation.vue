@@ -14,7 +14,7 @@
         </li>
 
         <li class="nav-item" v-if="store.isAuthenticated">
-          <router-link to="/users" class="nav-link" active-class="active">Profile</router-link>
+          <router-link to="/orders" class="nav-link" active-class="active">Orders</router-link>
         </li>
         <li class="nav-item" v-if="!store.isAuthenticated">
           <router-link to="/register" class="nav-link" active-class="active">Register</router-link>

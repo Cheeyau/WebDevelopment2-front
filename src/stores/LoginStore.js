@@ -15,17 +15,6 @@ export const useLoginStore = defineStore('login', {
     isAdmin: (state) => {
       return state.user_role > 0;
     }
-  }, 
-  mutations: {
-    updateUser (state, parameters) {
-      state.jwt = parameters.jwt,
-      state.name = parameters.name,
-      state.user_role = parameters.user_role,
-      state.expireAt = parameters.expireAt
-    },
-    clearUser () {
-      this.$reset();
-    }
   },
   actions: {
     autoLogin() {
@@ -42,11 +31,11 @@ export const useLoginStore = defineStore('login', {
         }
     },
     async logout() {
-      this.jwt = null;
-      this.name = null;
-      this.user_role = null;
       localStorage.clear();
-      this.expireAt = null;
+      this.$reset();
+    },
+    getJwt() {
+      return this.jwt;
     },
     async login(name, password) {
       return await new Promise((resolve, reject) => {
@@ -66,6 +55,11 @@ export const useLoginStore = defineStore('login', {
             localStorage.getItem('user_role', results.data.user_role);
             localStorage.getItem('expireAt', results.data.expireAt);
             resolve()
+
+            axios.interceptors.request.use(config => {
+              config.headers["Authorization"] = `Bearer ${this.jwt}`;
+              return config;
+            });
           })
           .catch((error) => reject(error));
       })

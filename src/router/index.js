@@ -16,7 +16,7 @@ const routes = [
   { path: '/transactions', component: Transaction },
   { path: '/orders', component: Order },
   { path: '/register', component: Register },
-  { path: '/editbike', component: EditBike },
+  { path: '/editbike/:id', component: EditBike, props: true },
   { path: '/createbike', component: CreateBike },
   { path: '/register', component: Register }
 ]

@@ -1,6 +1,11 @@
+<template>
+   <navigation />
+   <RouterView />
+</template>
+
 <script>
-import Navigation from './components/Navigation.vue'
-import { useLoginStore } from '@/stores/LoginStore'
+import Navigation from './components/Navigation.vue';
+import { useLoginStore } from '@/stores/LoginStore';
 
 export default {
   name: "App",
@@ -9,6 +14,7 @@ export default {
   },
   setup() {
     const store = useLoginStore();
+    
     return { store };
   },
   created() {
@@ -16,11 +22,6 @@ export default {
   }
 };
 </script>
-
-<template>
-   <navigation />
-   <RouterView />
-</template>
 
 <style scoped>
 </style>
