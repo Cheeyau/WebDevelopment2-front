@@ -55,7 +55,7 @@
 
 <script>
 export default {
-  name: "EditProduct",
+  name: "EditBike",
   props: {
     id: Number,
   },
@@ -67,7 +67,6 @@ export default {
         price: 0.0,
         description: "",
         image: "",
-        category_id: 0,
       },
       categories: [],
     };

@@ -16,8 +16,8 @@
         <li class="nav-item" v-if="store.isAuthenticated">
           <router-link to="/users" class="nav-link" active-class="active">Profile</router-link>
         </li>
-        <li class="nav-item" v-if="store.isAuthenticated">
-          <router-link to="/Profile" class="nav-link" active-class="active">Orders</router-link>
+        <li class="nav-item" v-if="!store.isAuthenticated">
+          <router-link to="/register" class="nav-link" active-class="active">Register</router-link>
         </li>
         
 
@@ -25,7 +25,7 @@
           <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
         </li>
         <li class="nav-item" v-else>
-          <router-link to="/" class="nav-link" active-class="active">Logout</router-link>
+          <router-link to="/" class="nav-link" active-class="active" @click="logout()" >Logout</router-link>
         </li>
 
       </ul>      
@@ -34,13 +34,24 @@
 </template>
 
 <script>
-import { useLoginStore } from '@/stores/store'
+import { useLoginStore } from '@/stores/LoginStore'
 
 export default {
   name: "Navigation",
   setup() {
     const store = useLoginStore();
     return { store };
+  },
+  methods: {
+    logout() {
+      this.store.logout()
+        .then(() => {
+          this.$router.replace("/");
+        })
+        .catch((error) => {
+          this.errorMessage = error;
+        });
+    }
   }
 };
 
