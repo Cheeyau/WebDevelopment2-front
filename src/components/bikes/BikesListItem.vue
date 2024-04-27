@@ -51,8 +51,8 @@ export default {
     addToBasket(id, amount) {
       this.basket.addProduct(id, amount);
     },
-    deleteBike(id) {
-      axios
+    async deleteBike(id) {
+      await axios
         if (confirm('Are you sure you want to delete this item?')) {
           axios
             .delete('/products/' + id) 

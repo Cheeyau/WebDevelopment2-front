@@ -73,7 +73,6 @@ export default {
   },
   mounted() {
     if (!this.store.isAuthenticated) this.$router.push('/login');
-
     axios
       .get('/products/' + this.id)
       .then((result) => {
@@ -84,8 +83,8 @@ export default {
         });
   },
   methods: {
-    updateBike() {
-      axios
+    async updateBike() {
+      await axios
         .put('/products/' + this.id, this.bike)
         .then((results) => {
           this.$router.push('/');

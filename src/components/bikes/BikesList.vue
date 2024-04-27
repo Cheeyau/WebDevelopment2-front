@@ -53,8 +53,8 @@ export default {
       this.limit = value.limit;
       this.getBikes();
     },
-    getBikes() {
-      const results = axios
+    async getBikes() {
+      await axios
         .get('/products', 
           { 
             params: { 

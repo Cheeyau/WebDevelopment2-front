@@ -73,8 +73,8 @@ export default {
     if (!this.store.isAuthenticated) this.$router.push('/login');
   },
   methods: {
-    createBike() {
-      axios
+    async createBike() {
+      await axios
         .post('/products/', this.bike)
         .then((results) => {
           this.$router.push('/');

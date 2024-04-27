@@ -37,7 +37,7 @@ export default {
     return { store };
   },
   methods: {
-    login() {
+    async login() {
       this.store.login(this.name, this.password)
         .then(() => {
           this.sendToHomePage();
