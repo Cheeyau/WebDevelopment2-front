@@ -115,4 +115,22 @@ export default {
   right: 15px;
   bottom: 15px;
 }
+
+@media only screen  and (max-width: 600px) {
+  .amount-box {
+    left: 50%;
+    right: 0;
+  }
+
+  .card-body-items {
+    padding-bottom: 120px;
+  }
+  .card-body-items span {
+    text-align: center;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    bottom: 60px;
+  }
+}
 </style>

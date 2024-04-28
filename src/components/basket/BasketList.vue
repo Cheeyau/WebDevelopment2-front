@@ -124,4 +124,10 @@ export default {
   margin-left: 15px;
   margin-right: 15px;
 }
+
+@media only screen  and (max-width: 600px) {
+  .basket-bottom button {
+    margin-bottom: 15px;
+  }
+}
 </style>

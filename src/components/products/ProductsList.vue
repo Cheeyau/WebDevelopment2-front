@@ -1,9 +1,11 @@
 <template>
   <section>
     <div v-if="errorMessage" class="alert alert-danger" role="alert">{{ errorMessage }}</div>
-    <div class="container">
+    <section class="container">
       <h2 class="mt-3 mt-lg-5">Products</h2>  
-      <button v-if="store.isAdmin"  type="button" class="btn btn-primary mt-3" @click="this.$router.push('/createproduct');">Add product</button>
+      <div class="add-product">
+        <button v-if="store.isAdmin"  type="button" class=" btn btn-primary" @click="this.$router.push('/createproduct');">Add product</button>
+      </div>
       
       <section>
         <h5 class="categories align-middle">Categories:</h5>
@@ -28,7 +30,7 @@
         :limit = "this.limit"
         :count = "this.count"
         @clicked="childPaginator"/>
-    </div>
+    </section>
 
   </section>
 </template>
@@ -124,6 +126,9 @@ ol {
 .categories li button {
   text-decoration: none;
 }
+.add-product {
+  margin-bottom: 15px;
+}
 
 @media only screen  and (max-width: 600px) {
   .categories {
@@ -136,6 +141,9 @@ ol {
   }
 
   .categories {
+    text-align: center;
+  }
+  .add-product {
     text-align: center;
   }
 }
