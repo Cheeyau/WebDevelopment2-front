@@ -1,24 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from '../components/Home.vue';
-import Login from '../components/Login.vue';
-import User from '../components/User.vue';
-import Order from '../components/Order.vue';
-import Transaction from '../components/Transaction.vue';
-import Register from '../components/Register.vue';
-import EditBike from '../components/bikes/EditBike.vue';
-import CreateBike from '../components/bikes/CreateBike.vue';
+import Home from '../components/view/Home.vue';
+import Login from '../components/view/Login.vue';
+import Order from '../components/view/Order.vue';
+import Register from '../components/view/Register.vue';
+import EditProduct from '../components/products/EditProduct.vue';
+import CreateProduct from '../components/products/CreateProduct.vue';
+import Basket from '../components/view/Basket.vue';
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/users', component: User },
   { path: '/login', component: Login },
-  { path: '/transactions', component: Transaction },
   { path: '/orders', component: Order },
   { path: '/register', component: Register },
-  { path: '/editbike/:id', component: EditBike, props: true },
-  { path: '/createbike', component: CreateBike },
-  { path: '/register', component: Register }
+  { path: '/editproduct/:id', component: EditProduct, props: true },
+  { path: '/createproduct', component: CreateProduct },
+  { path: '/register', component: Register },
+  { path: '/basket', component: Basket }
 ]
 
 const router = createRouter({

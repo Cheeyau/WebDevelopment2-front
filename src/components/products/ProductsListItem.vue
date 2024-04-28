@@ -3,23 +3,28 @@
     <div class="card product-card h-100">
       
       <div class="card-body card-body-items">
-        <img :src="bike.image" :alt="bike.title" :title="bike.title" />
-        <h3>{{ bike.name }}</h3>
-        <p>{{ bike.description }}</p>
-        <span class="price float-end">€ {{ bike.price.toFixed(2) }}</span>
+        <img :src="product.image" :alt="product.title" :title="product.title" />
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+        <span class="price float-end">€ {{ total }}</span>
         
         <div>
-          <input type="number" class="form-control" min="0" v-model="this.amount" />
-        
-          <button class="btn btn-success" @click="addToBasket(bike.id, this.amount)">Add to basket</button>
+          <div class="amount-box justify-content-center text-center">
+            <amount-button :amount="this.amount" @clicked="setAmount"/>
+          </div>
+          
+          <button class="btn btn-success" @click="addToBasket(product.id, this.amount)">
+            Add 
+            <i class="bi-plus-lg"></i>
+          </button>
         </div>
       </div>
       
-      <div v-if="store.isAuthenticated" class="card-footer">
-        <button class="btn btn-warning" v-on:click="editBike(bike.id)">
+      <div v-if="store.isAdmin" class="card-footer">
+        <button class="btn btn-warning" v-on:click="editProduct(product.id)">
           Edit</button
         >&nbsp;&nbsp;
-        <button class="btn btn-danger" v-on:click="deleteBike(bike.id)">
+        <button class="btn btn-danger" v-on:click="deleteProduct(product.id)">
           Delete
         </button>
       </div>
@@ -31,27 +36,40 @@
 import { useLoginStore } from '@/stores/LoginStore'
 import { useBasketStore } from '@/stores/BasketStore'
 import axios from '../../axios-auth';
+import AmountButton from '../AmountButton.vue';
 
 export default {
-  name: "BikeListItem",
+  name: "ProductsListItem",
   data() {
     return {
       amount: 0,
     }
   },
+  components: {
+    AmountButton,
+  },
   props: {
-    bike: Object,
+    product: Object,
   },
   setup() {
     const store = useLoginStore();
     const basket = useBasketStore();
     return { store, basket };
   },
+  computed: {
+    total() {
+      return this.product.price.toFixed(2);
+    },
+  },
+  
   methods: {
+    setAmount(amount) {
+      this.amount = amount.amount;
+    },
     addToBasket(id, amount) {
       this.basket.addProduct(id, amount);
     },
-    async deleteBike(id) {
+    async deleteProduct(id) {
       await axios
         if (confirm('Are you sure you want to delete this item?')) {
           axios
@@ -65,14 +83,22 @@ export default {
             });
         }
     },
-    editBike(id) {
-      this.$router.push('/editbike/' + id);
+    editProduct(id) {
+      this.$router.push('/editproduct/' + id);
     },
   },
 };
 </script>
 
 <style scoped>
+
+.amount-box {
+  position: absolute;
+  bottom: 15px;
+  left: 23%;
+  right: 30%;
+}
+
 .card-body-items {
   position: relative;
   padding-bottom: 70px;
@@ -82,14 +108,6 @@ export default {
   position: absolute;
   left: 15px;
   bottom: 15px;
-}
-
-.card-body-items div input  {
-  position: absolute;
-  width: 70px;
-  bottom: 15px;
-  left: 50%;
-  right: 50%;
 }
 
 .card-body-items span {

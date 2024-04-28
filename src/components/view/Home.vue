@@ -5,17 +5,17 @@
       <h2 v-else="store.isAuthenticated" class="mt-3 mt-lg-5">Welcome {{ store.name }}</h2>
     </div>
   </section>
-  <bikesList />
+  <productsList />
 </template>
 
 <script>
 import { useLoginStore } from '@/stores/LoginStore'
-import bikesList from './bikes/BikesList.vue'
+import productsList from '../products/ProductsList.vue'
 
 export default {
   name: "Home",
   components: {
-    bikesList,
+    productsList,
   },
   setup() {
     const store = useLoginStore();

@@ -1,43 +1,63 @@
 <template>
-  <section class="paginator">
-    <button class="btn btn-secondary col-1" @click="paginatorPrevious()">Previous</button>
-    <button v-if="showButton" class="btn btn-primary col-1" @click="paginatorNext()">Next</button>
+  <section class="text-center paginator">
+    <button v-if="!showPreviousButton" class="btn btn-secondary" @click="paginatorPrevious(this.offset, this.limit, this.count)">
+      <i class="bi-arrow-left"></i>
+      Previous
+    </button>
+    <button v-if="showButton" class="btn btn-primary" @click="paginatorNext(this.offset, this.limit, this.count)">
+      Next
+      <i class="bi-arrow-right"></i>
+    </button>
   </section>
 </template>
 
 <script>
 export default {
   name: "Paginator",
+  emits: ["clicked"],
   data() {
     return {
-      offset: 0,
-      limit: 3,
-      count: 3,
     };
   },
   props: {
+    offset: Number,
+    limit: Number,
+    count: Number,
     showButton: Boolean
   },
+  computed: {
+    showPreviousButton() {
+      return this.offset === 0;
+    }
+  },
   methods: {
-    paginatorNext() {
-      this.offset += this.count;
-      this.limit += this.count;
-      if (this.limit < 3) this.limit = 3;
-      this.$emit('clicked', { offset: this.offset, limit: this.limit });
+    paginatorNext(offset, limit, count) {
+      offset += count;
+      limit += count;
+      if (limit < count) limit = count;
+      this.$emit('clicked', { offset: offset, limit: limit });
     },
-    paginatorPrevious() {
-      if (this.offset - this.count >= 3) {
-        this.limit -= this.count;
-        this.offset -= this.count;
+    paginatorPrevious(offset, limit, count) {
+      if (offset - count >= count) {
+        limit -= count;
+        offset -= count;
       } else {
-        this.limit = this.count;
-        this.offset = 0;
+        limit = count;
+        offset = 0;
       }
-      this.$emit('clicked', { offset: this.offset, limit: this.limit });
+      this.$emit('clicked', { offset: offset, limit: limit });
     }
   }
 };
 </script>
 
 <style>
+.paginator {
+  padding: 0 15px;
+}
+
+.paginator button {
+  margin: 8px;
+}
+
 </style>
