@@ -13,3 +13,14 @@ npm install
 ```sh
 npm run dev
 ```
+
+Create a new user or use the following:
+```
+user
+Elon 
+password123
+
+admin
+Bob or James 
+password123
+```
