@@ -1,6 +1,6 @@
-# vue-crud-starter
+# Bike web shop
 
-This is a bike show front end for web development 2 created in Vue 3.
+This is a bike web shop front end for web development 2 created in Vue 3.
 
 ## Project Setup
 
