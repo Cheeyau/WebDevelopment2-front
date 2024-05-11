@@ -94,14 +94,13 @@ export default {
 
 .amount-box {
   position: absolute;
-  bottom: 15px;
-  left: 23%;
-  right: 30%;
+  bottom: 60px;
+  left: 15px;
 }
 
 .card-body-items {
   position: relative;
-  padding-bottom: 70px;
+  padding-bottom: 120px;
 }
 
 .card-body-items div button  {
