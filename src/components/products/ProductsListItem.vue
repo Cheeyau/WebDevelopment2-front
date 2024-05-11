@@ -119,6 +119,7 @@ export default {
   .amount-box {
     left: 50%;
     right: 0;
+    bottom: 15px;
   }
 
   .card-body-items {
